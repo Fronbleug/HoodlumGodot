@@ -262,7 +262,7 @@ position = Vector2( 72, -16 )
 path = PoolVector2Array( 16, 128, 16, 0 )
 
 [node name="Car" parent="." instance=ExtResource( 6 )]
-position = Vector2( 192, 216 )
+position = Vector2( 85, 205 )
 AccelSpeed = 20
 
 [node name="Car2" parent="." instance=ExtResource( 6 )]
