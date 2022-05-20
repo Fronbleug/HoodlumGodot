@@ -1,7 +1,38 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/objects/Car.gd" type="Script" id=1]
 [ext_resource path="res://sprites/objects/cars/CAR1.png" type="Texture" id=2]
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 0.501961, 0.501961, 0.501961, 1, 0.717647, 0.717647, 0.717647, 0.168627 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 0.0875 ), 0.0, 1.74242, 0, 0, Vector2( 1, 0.936364 ), 0.122395, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+emission_shape = 2
+emission_box_extents = Vector3( 1.288, 1.172, 1.398 )
+flag_rotate_y = true
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 139.88
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 44.01
+angular_velocity = 198.65
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 1.0
+scale = 59.82
+scale_random = 0.09
+scale_curve = SubResource( 8 )
+color = Color( 0.317647, 0.317647, 0.317647, 0.580392 )
+color_ramp = SubResource( 6 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 32 )
@@ -22,11 +53,23 @@ angular_damp = 3.0
 script = ExtResource( 1 )
 texture = ExtResource( 2 )
 
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 4, 13 )
+amount = 339
+local_coords = false
+process_material = SubResource( 4 )
+
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="GetIn" type="Area2D" parent="." groups=["Car"]]
 

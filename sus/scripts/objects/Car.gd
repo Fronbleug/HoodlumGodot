@@ -25,12 +25,14 @@ export (Texture) var texture
 
 func _ready():
 	$Sprite.texture = texture
-
+	
+	
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta):
 	Velbef = linear_velocity
 	if Player != null:
 		if Driving:
+			$Particles2D.emitting = true
 
 			linear_velocity += Vector2(0,1).rotated(rotation) *  Player.MoveDir.y * AccelSpeed
 			WheelRot=Player.MoveDir.x*90
@@ -38,7 +40,8 @@ func _physics_process(delta):
 			rotate(WheelRot*delta *(linear_velocity.length() *0.0001))
 			
 			Player.position = position
-			
+	else:
+		$Particles2D.emitting = false
 	var forwardVelocity = Vector2.UP.rotated(rotation) * linear_velocity.dot( Vector2.UP.rotated(rotation))
 	var rightVelocity = Vector2.RIGHT.rotated(rotation) * linear_velocity.dot(Vector2.RIGHT.rotated(rotation))
 	linear_velocity = forwardVelocity + rightVelocity * 0.95;

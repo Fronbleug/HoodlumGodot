@@ -270,10 +270,10 @@ position = Vector2( 296, 216 )
 AccelSpeed = 200
 texture = ExtResource( 8 )
 
-[node name="Sprite" parent="Car2" index="0"]
+[node name="Sprite" parent="Car2" index="1"]
 scale = Vector2( 0.75, 0.75 )
 
-[node name="CollisionShape2D" parent="Car2" index="1"]
+[node name="CollisionShape2D" parent="Car2" index="2"]
 scale = Vector2( 0.75, 0.75 )
 
 [editable path="Car2"]
