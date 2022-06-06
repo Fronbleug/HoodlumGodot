@@ -248,7 +248,7 @@ script = ExtResource( 5 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
-[node name="TileMap" type="TileMap" parent="Navigation2D"]
+[node name="TileMap" type="TileMap" parent="Navigation2D" groups=["Wall"]]
 tile_set = SubResource( 9 )
 cell_size = Vector2( 32, 32 )
 show_collision = true
@@ -267,6 +267,8 @@ AccelSpeed = 20
 
 [node name="Car2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 296, 216 )
+rotation = 1.59567
+Hp = 1
 AccelSpeed = 200
 texture = ExtResource( 8 )
 

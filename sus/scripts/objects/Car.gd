@@ -6,6 +6,8 @@ extends RigidBody2D
 # var b = "text"
 var Player = null
 
+export var Hp = 100
+
 var Driving = false
 
 var WheelRot = 0
@@ -72,3 +74,16 @@ func _on_GetIn_body_exited(body):
 					Player = null
 			
 
+
+
+func _on_Car_body_entered(body):
+	var explosion = load("res://scenes/Explosion.tscn")
+	
+	Hp -= 10
+	
+	
+	if Hp <= 0:
+			if Player != null:
+					Driving = false
+					Player.GetOutOfCar()
+			queue_free()

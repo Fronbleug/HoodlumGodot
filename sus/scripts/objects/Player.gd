@@ -19,7 +19,7 @@ onready var Bullet = preload("res://scenes/objects/Bullet.tscn")
 onready var anim_player = $AnimationPlayer
 
 onready var GunSprite = preload("res://sprites/objects/player/PlayerGun.png")
-onready var NormalSprite = preload("res://sprites/objects/player/Player.png")
+onready var NormalSprite = preload("res://sprites/objects/player/Player2.png")
 
 var MoveSpeed = 100
 
@@ -43,6 +43,8 @@ func _ready():
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta):
 	
+	$Legs.global_rotation = Vector2.UP.rotated(MoveDir.angle()).angle()
+	
 	$Camera2D.zoom = lerp($Camera2D.zoom,Vector2(camzoom,camzoom),0.5)
 	
 	MoveDir.x = Input.get_axis("ui_left","ui_right")
@@ -50,6 +52,9 @@ func _physics_process(delta):
 	Sprint = Input.is_action_pressed("Sprint")
 	
 	Aim = Input.is_action_pressed("Aim")
+	
+	FacingDir = Vector2.RIGHT.rotated(rotation)
+	
 	match state:
 		STATES.default:
 			
@@ -86,14 +91,12 @@ func _physics_process(delta):
 						Shoot()
 						ShootTime = 0.25
 		STATES.car:
-			if Input.is_action_just_pressed("CarButton"):
-					Car.Driving = false
-					state = STATES.default
-					$CollisionShape2D.disabled = false
-					$Camera2D.offset = Vector2()
-					camzoom = 0.5
 			$Camera2D.offset.x = lerp($Camera2D.offset.x,Car.linear_velocity.x /3,0.1)
 			$Camera2D.offset.y = lerp($Camera2D.offset.y,Car.linear_velocity.y  /3,0.1)
+			if Input.is_action_just_pressed("CarButton"):
+					Car.Driving = false
+					GetOutOfCar()
+
 			Velocity = Vector2()
 	Velocity = move_and_slide(Velocity,Vector2.UP,false,4,0.785398,false)
 	if MoveDir != Vector2():
@@ -107,6 +110,15 @@ func _physics_process(delta):
 		if $Sprite.texture != NormalSprite:
 			$Sprite.texture = NormalSprite
 	PlayAnim()
+	
+func GetOutOfCar():
+					state = STATES.default
+					Car = null
+					$CollisionShape2D.disabled = false
+					$Camera2D.offset = Vector2()
+					camzoom = 0.5
+	
+	
 func PlayAnim():
 	
 	if Moving:
@@ -116,6 +128,7 @@ func PlayAnim():
 	
 func Shoot():
 	var b = Bullet.instance()
-	b.Start(position,500,Vector2(1,0).rotated(rotation),"Player")
+	b.Source = self
+	b.Start(position+FacingDir*10,500,Vector2(1,0).rotated(rotation),"Player")
 	b.add_to_group("Player")
 	get_parent().add_child(b)
